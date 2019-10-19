@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/baiduTemplate.js"></script>
+</head>
+<body>
+
+<article class="blogs">
+    <h2 class="title_tj">
+    <p>文章<span>推荐</span></p>
+  </h2>
+	<div class="newblog left">
+        
+	</div>
+</article>
+<footer>
+    <p class="ft-copyright">个人博客 Sunshine </p>
+    <div id="tbox"> <a id="togbook" href=""></a> <a id="gotop" href="javascript:void(0)"></a></div>
+</footer>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>  
+    $.get("/getdata",function(data){
+        console.log(data);
+        var dataList = JSON.parse(data);//将接收到的字符串转换为JavaScript对象
+        console.log(dataList);
+        dataList.forEach((data,index) => {
+            console.log(data,index);
+            var content = `<div class="oneblog">
+                        <h2><a title="${data.chapterName}" href="/detail?chapterId=${data.chapterId}">${data.chapterName}</a></h2>
+                        <figure><img src='${data.imgPath}' border='0' width='120' height='120' alt='${data.chapterName}'></figure>
+                        <ul class="nlist">
+                            <p>${data.chapterDes}</p>
+                            <a title="${data.chapterName}" href="/detail?chapterId=${data.chapterId}" target="_blank" class="readmore">阅读全文>></a>
+                        </ul>
+                        <p class="dateview">
+                            <span>发布时间：${data.publishTimer}</span>
+                            <span>作者：${data.author}</span>
+                            <span>分类：[<a href="##">悠客</a>]</span>
+                            <span class="nl">浏览（${data.views})</span>
+                            <span class="n2">评论（<a href="##">0</a>）</span>
+                            <div class="line"></div>
+                        </p>
+                    </div>`
+            $(".newblog").append(content);
+            
+        });
+    $(".newblog").append("<div class='page'></div>");
+    })
+</script>
+</html>
